@@ -23,8 +23,11 @@ public class ClienteForm {
 		this.cidade = cidade;
 	}
 	public Cliente converter(ClienteRepository clienteRepository) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+	public Cliente converter(ClienteForm form) {
+		// TODO Auto-generated method stub
+		return new Cliente(this.nome, this.cpf,this.endereco, this.cidade);
 	}
 	
 	

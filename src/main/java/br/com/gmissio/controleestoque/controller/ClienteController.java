@@ -1,5 +1,6 @@
 package br.com.gmissio.controleestoque.controller;
 
+import java.net.URI;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,15 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.gmissio.controleestoque.controller.dto.ClienteDto;
+import br.com.gmissio.controleestoque.form.ClienteForm;
 import br.com.gmissio.controleestoque.model.Cliente;
 import br.com.gmissio.controleestoque.repository.ClienteRepository;
 
@@ -52,6 +56,16 @@ public class ClienteController {
 		}
 		
 		return ResponseEntity.notFound().build();
+	}
+	
+	@PostMapping
+	public ResponseEntity<ClienteDto> cadastrar(@RequestBody ClienteForm form, UriComponentsBuilder uriBuilder) {
+		Cliente cliente = form.converter(form);
+		clienteRepository.save(cliente);
+		
+		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(cliente.getId()).toUri();
+		
+		return ResponseEntity.created(uri).body(new ClienteDto(cliente));
 	}
 	
 	
