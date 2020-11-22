@@ -3,8 +3,9 @@ package br.com.gmissio.controleestoque.controller;
 import java.net.URI;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -59,7 +60,7 @@ public class ClienteController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClienteDto> cadastrar(@RequestBody ClienteForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<ClienteDto> cadastrar(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
 		Cliente cliente = form.converter(form);
 		clienteRepository.save(cliente);
 		
