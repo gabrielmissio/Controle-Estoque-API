@@ -9,6 +9,7 @@ import br.com.gmissio.controleestoque.repository.ClienteRepository;
 
 public class ClienteForm {
 
+	//versão 2.1.4 funcionou, na 2.4.0 deu erro
 	@NotEmpty @NonNull
 	private String nome;
 	@NotEmpty @NonNull
