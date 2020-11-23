@@ -1,26 +1,32 @@
 package br.com.gmissio.controleestoque.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-
-//@Entity
+@Entity
 public class Vendedor {
 	
-//	 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	 private String nome;
+	private String nome;
 	private Double salario;
 	private Double comicao;
+	@ManyToOne
 	private Loja loja;
 	
 	public Vendedor() {
 		
 	}
 	
-	public Vendedor(String nome, Double salario, Double comicao) {
+	public Vendedor(String nome, Double salario, Double comicao, Loja loja) {
 		this.nome = nome;
 		this.salario = salario;
 		this.comicao = comicao;
+		this.loja = loja;
 	}
 
 	public long getId() {
