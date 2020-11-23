@@ -7,6 +7,7 @@ import br.com.gmissio.controleestoque.model.Cliente;
 
 public class ClienteDto {
 
+	private Long id;
 	private String nome;
 	private String cpf;
 	private String endereco;
@@ -17,12 +18,21 @@ public class ClienteDto {
 		this.cpf = cliente.getCpf();
 		this.endereco = cliente.getEndereco();
 		this.cidade = cliente.getCidade();
+		this.id = cliente.getId();
 	}
 	
 	public ClienteDto() {
 		
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
