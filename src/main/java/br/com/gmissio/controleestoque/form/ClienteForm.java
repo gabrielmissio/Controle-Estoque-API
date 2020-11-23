@@ -5,7 +5,6 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.lang.NonNull;
 
 import br.com.gmissio.controleestoque.model.Cliente;
-import br.com.gmissio.controleestoque.repository.ClienteRepository;
 
 public class ClienteForm {
 
@@ -31,9 +30,7 @@ public class ClienteForm {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	public Cliente converter(ClienteRepository clienteRepository) {
-		return null;
-	}
+	
 	public Cliente converter(ClienteForm form) {
 		// TODO Auto-generated method stub
 		return new Cliente(this.nome, this.cpf,this.endereco, this.cidade);

@@ -22,64 +22,63 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import br.com.gmissio.controleestoque.controller.atualizaform.AtualizaCategoriaForm;
-import br.com.gmissio.controleestoque.controller.dto.CategoriaDto;
-import br.com.gmissio.controleestoque.form.CategoriaForm;
-import br.com.gmissio.controleestoque.model.Categoria;
-import br.com.gmissio.controleestoque.repository.CategoriaRepository;
+import br.com.gmissio.controleestoque.controller.atualizaform.AtualizaLojaForm;
+import br.com.gmissio.controleestoque.controller.dto.LojaDto;
+import br.com.gmissio.controleestoque.form.LojaForm;
+import br.com.gmissio.controleestoque.model.Loja;
+import br.com.gmissio.controleestoque.repository.LojaRepository;
 
 @RestController
-@RequestMapping("/categorias")
-public class CategoriaController {
-
+@RequestMapping("/lojas")
+public class LojaController {
+	
 	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private LojaRepository lojaRepository;
 	
 	@GetMapping
-	public Page<CategoriaDto> lista(@RequestParam(required = false) String nome, //posteriormente filtar 
+	public Page<LojaDto> lista(@RequestParam(required = false) String nome, //posteriormente filtar 
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 		
 		System.out.println(nome);
 		//para fazer com filtro de cliente
 		if (nome == null) {
-			Page<Categoria> categoria = categoriaRepository.findAll(paginacao);
-			return CategoriaDto.converter(categoria);
+			Page<Loja> loja = lojaRepository.findAll(paginacao);
+			return LojaDto.converter(loja);
 		} else {
-			Page<Categoria> categoria = categoriaRepository.findByNome(nome, paginacao);
-			return CategoriaDto.converter(categoria);
+			Page<Loja> loja = lojaRepository.findByNome(nome, paginacao);
+			return LojaDto.converter(loja);
 		}
 	}
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<CategoriaDto> cadastrar(@RequestBody @Valid CategoriaForm form, UriComponentsBuilder uriBuilder){
-		Categoria categoria = form.converter(form);
-		categoriaRepository.save(categoria);
+	public ResponseEntity<LojaDto> cadastrar(@RequestBody @Valid LojaForm form, UriComponentsBuilder uriBuilder){
+		Loja loja = form.converter(form);
+		lojaRepository.save(loja);
 		
 		//para pegar o caminho da uri e retornar na resposta de requisição
-		URI uri = uriBuilder.path("/categorias/{id}").buildAndExpand(categoria.getId()).toUri();
+		URI uri = uriBuilder.path("/lojas/{id}").buildAndExpand(loja.getId()).toUri();
 		
-		return ResponseEntity.created(uri).body(new CategoriaDto(categoria));
+		return ResponseEntity.created(uri).body(new LojaDto(loja));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoriaDto> detalhar(@PathVariable Long id){
+	public ResponseEntity<LojaDto> detalhar(@PathVariable Long id){
 		
-		Optional<Categoria> optional = categoriaRepository.findById(id);
+		Optional<Loja> optional = lojaRepository.findById(id);
 		if(optional.isPresent()) {
-			return ResponseEntity.ok(new CategoriaDto(optional.get()));
+			return ResponseEntity.ok(new LojaDto(optional.get()));
 		}
 		return ResponseEntity.notFound().build();
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
-	public ResponseEntity<CategoriaDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaCategoriaForm form){
-		Optional<Categoria> optinal = categoriaRepository.findById(id);
+	public ResponseEntity<LojaDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaLojaForm form){
+		Optional<Loja> optinal = lojaRepository.findById(id);
 		if(optinal.isPresent()) {
-			Categoria categoria = form.atualizar(id, categoriaRepository);
-			return ResponseEntity.ok(new CategoriaDto(categoria));
+			Loja loja = form.atualizar(id, lojaRepository);
+			return ResponseEntity.ok(new LojaDto(loja));
 		}else {
 			return ResponseEntity.notFound().build();
 		}
@@ -88,13 +87,14 @@ public class CategoriaController {
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> remover(@PathVariable Long id){
-		Optional<Categoria> optional = categoriaRepository.findById(id);
+		Optional<Loja> optional = lojaRepository.findById(id);
 		if(optional.isPresent()) {
-			categoriaRepository.deleteById(id);
+			lojaRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}else {
 			return ResponseEntity.notFound().build();
 		}
 	}
 	
+
 }

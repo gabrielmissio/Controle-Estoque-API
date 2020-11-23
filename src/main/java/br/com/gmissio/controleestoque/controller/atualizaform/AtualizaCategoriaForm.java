@@ -25,7 +25,7 @@ public class AtualizaCategoriaForm {
 		this.descricao = descricao;
 	}
 	
-	public Categoria converter(Long id, CategoriaRepository categoriaRepository) {
+	public Categoria atualizar(Long id, CategoriaRepository categoriaRepository) {
 		Categoria categoria = categoriaRepository.getOne(id);
 		categoria.setCodigo(this.codigo);
 		categoria.setDescricao(this.descricao);

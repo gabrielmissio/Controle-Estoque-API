@@ -1,71 +1,63 @@
-package br.com.gmissio.controleestoque.model;
+package br.com.gmissio.controleestoque.controller.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import br.com.gmissio.controleestoque.model.Loja;
+import org.springframework.data.domain.Page;
 
-@Entity
-public class Loja {
-	
-	 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class LojaDto {
+
 	private long id;
 	private String nome;
-	private String endereco;
-	private String cidade;
 	private String cnpj;
+	private String cidade;
+	private String endereco;
 	
-	public Loja() {
+	
+	public LojaDto(Loja loja) {
+		this.id = loja.getId();
+		this.nome = loja.getNome();
+		this.cnpj = loja.getCnpj();
+		this.cidade = loja.getCidade();
+		this.endereco = loja.getEndereco();
+	}
+	
+	public LojaDto() {
 		
 	}
 	
-	public Loja(String nome, String endereco, String cidade, String cnpj) {
-		this.nome = nome;
-		this.endereco = endereco;
-		this.cidade = cidade;
-		this.cnpj = cnpj;
-	}
-
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 	public String getEndereco() {
 		return endereco;
 	}
-
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-
 	public String getCidade() {
 		return cidade;
 	}
-
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-
 	public String getCnpj() {
 		return cnpj;
 	}
-
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 	
+	public static Page<LojaDto> converter(Page<Loja> lojas) {
+		return lojas.map(LojaDto::new);
+	}
 	
-
 }
