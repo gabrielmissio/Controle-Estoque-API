@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import br.com.gmissio.controleestoque.controller.atualizaform.AtualizarClienteForm;
 import br.com.gmissio.controleestoque.controller.dto.ClienteDto;
 import br.com.gmissio.controleestoque.form.ClienteForm;
@@ -52,6 +52,17 @@ public class ClienteController {
 		}
 	}
 	
+	@Transactional
+	@PostMapping
+	public ResponseEntity<ClienteDto> cadastrar(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
+		Cliente cliente = form.converter(form);
+		clienteRepository.save(cliente);
+		
+		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(cliente.getId()).toUri();
+		
+		return ResponseEntity.created(uri).body(new ClienteDto(cliente));
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<ClienteDto> detalhar(@PathVariable Long id) {
 		Optional<Cliente> topico = clienteRepository.findById(id);
@@ -65,19 +76,27 @@ public class ClienteController {
 	@Transactional
 	@PutMapping("/{id}")
 	public ResponseEntity<ClienteDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizarClienteForm form){
-		Cliente cliente = form.atualizar(id, clienteRepository);
+		Optional<Cliente> optional = clienteRepository.findById(id);
+		if(optional.isPresent()) {
+			Cliente cliente = form.atualizar(id, clienteRepository);
+			return ResponseEntity.ok(new ClienteDto(cliente));
+		}else {
+			return ResponseEntity.notFound().build();
+		}
 		
-		return ResponseEntity.ok(new ClienteDto(cliente));
 	}
 	
-	@PostMapping
-	public ResponseEntity<ClienteDto> cadastrar(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
-		Cliente cliente = form.converter(form);
-		clienteRepository.save(cliente);
+
+	@DeleteMapping("/{id}")
+	@Transactional
+	public ResponseEntity<?> remover(@PathVariable Long id) {
+		Optional<Cliente> optional = clienteRepository.findById(id);
+		if (optional.isPresent()) {
+			clienteRepository.deleteById(id);
+			return ResponseEntity.ok().build();
+		}
 		
-		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(cliente.getId()).toUri();
-		
-		return ResponseEntity.created(uri).body(new ClienteDto(cliente));
+		return ResponseEntity.notFound().build();
 	}
 	
 	
