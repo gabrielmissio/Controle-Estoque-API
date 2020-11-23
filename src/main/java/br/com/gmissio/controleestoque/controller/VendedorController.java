@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -83,6 +84,20 @@ public class VendedorController {
 		if(optional.isPresent()) {
 			Vendedor vendedor = form.atualizar(id, vendedorRepository);
 			return ResponseEntity.ok(new VendedorDto(vendedor));
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+		
+	}
+	
+	@Transactional
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> remover(@PathVariable Long id){
+		
+		Optional<Vendedor> optinal = vendedorRepository.findById(id);
+		if(optinal.isPresent()) {
+			vendedorRepository.deleteById(id);
+			return ResponseEntity.ok().build();
 		}else {
 			return ResponseEntity.notFound().build();
 		}
