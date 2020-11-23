@@ -11,3 +11,8 @@ INSERT INTO LOJA(cidade, cnpj, endereco, nome) VALUES('São Paulo', '99.999.999/
 INSERT INTO VENDEDOR(comicao, nome, salario, loja_id) VALUES('10.0', 'João Cleber Nascimento', '3000.0', '1');
 INSERT INTO VENDEDOR(comicao, nome, salario, loja_id) VALUES('15.0', 'Jorel Camargo Santana', '5000.0', '1');
 INSERT INTO VENDEDOR(comicao, nome, salario, loja_id) VALUES('20.0', 'Maria Ines Pererira', '2000.0', '2');
+
+INSERT INTO PRODUTO(codigo, descricao, preco_unitario, quantidade, categoria_id) VALUES('codigo produto 1', 'Torradeira 110/220 Torra Bem', '119.99', '1', '1');
+INSERT INTO PRODUTO(codigo, descricao, preco_unitario, quantidade, categoria_id) VALUES('codigo produto 2', 'Smart TV LG', '1500', '1', '1');
+INSERT INTO PRODUTO(codigo, descricao, preco_unitario, quantidade, categoria_id) VALUES('codigo produto 3', 'Aveia de trigo', '8.99', '5', '2');
+

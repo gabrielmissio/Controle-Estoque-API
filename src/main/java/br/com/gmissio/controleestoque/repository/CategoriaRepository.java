@@ -10,4 +10,6 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
 	Page<Categoria> findByNome(String nome, Pageable paginacao);
 
+	Categoria findByNome(String nome);
+
 }

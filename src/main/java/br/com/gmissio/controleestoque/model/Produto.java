@@ -1,28 +1,34 @@
 package br.com.gmissio.controleestoque.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-
-//@Entity
+@Entity
 public class Produto {
 	
-//	 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	 
 	private String codigo;
 	private Double precoUnitario;
 	private int quantidade;
 	private String descricao;
+	@ManyToOne
 	private Categoria categoria;
 	
 	public Produto() {
 		
 	}
 	
-	public Produto(String codigo, Double precoUnitario, int quantidade, String descricao) {
+	public Produto(String codigo, Double precoUnitario, int quantidade, String descricao, Categoria categoria) {
 		this.codigo = codigo;
 		this.precoUnitario = precoUnitario;
 		this.quantidade = quantidade;
 		this.descricao = descricao;
+		this.categoria = categoria;
 	}
 
 	public long getId() {
@@ -72,11 +78,6 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return "Descrição: " + this.getDescricao() + "\nPreço: " + this.getPrecoUnitario() + "\nCodigo: " + this.getCodigo() + "\nCategoria: temporariamente indisponivel" + "\nQuantidade: " + this.getQuantidade();
-	}
+
 	
 }
