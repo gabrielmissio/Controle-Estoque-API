@@ -16,3 +16,6 @@ INSERT INTO PRODUTO(codigo, descricao, preco_unitario, quantidade, categoria_id)
 INSERT INTO PRODUTO(codigo, descricao, preco_unitario, quantidade, categoria_id) VALUES('codigo produto 2', 'Smart TV LG', '1500', '1', '1');
 INSERT INTO PRODUTO(codigo, descricao, preco_unitario, quantidade, categoria_id) VALUES('codigo produto 3', 'Aveia de trigo', '8.99', '5', '2');
 
+INSERT INTO PEDIDO_VENDA(data_pedido, valor_total, cliente_id, vendedor_id) VALUES('2020-02-02 08:10:07', '123456789', '1', '1');
+
+ 
