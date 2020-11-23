@@ -6,16 +6,37 @@ import br.com.gmissio.controleestoque.model.Categoria;
 
 public class CategoriaDto {
 	
-	private String descricao;
+	private Long id;
 	private String nome;
-	
+	private String descricao;
+	private String codigo;
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
 	public CategoriaDto(Categoria categoria) {
+		this.id = categoria.getId();
 		this.descricao = categoria.getDescricao();
 		this.nome = categoria.getNome();
+		this.codigo = categoria.getCodigo();
+		
 	}
 	
 	public CategoriaDto() {
 		
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	public String getDescricao() {

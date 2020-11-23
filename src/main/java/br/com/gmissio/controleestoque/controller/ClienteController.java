@@ -58,16 +58,16 @@ public class ClienteController {
 		Cliente cliente = form.converter(form);
 		clienteRepository.save(cliente);
 		
-		URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(cliente.getId()).toUri();
+		URI uri = uriBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new ClienteDto(cliente));
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ClienteDto> detalhar(@PathVariable Long id) {
-		Optional<Cliente> topico = clienteRepository.findById(id);
-		if (topico.isPresent()) {
-			return ResponseEntity.ok(new ClienteDto(topico.get()));
+		Optional<Cliente> optional = clienteRepository.findById(id);
+		if (optional.isPresent()) {
+			return ResponseEntity.ok(new ClienteDto(optional.get()));
 		}
 		
 		return ResponseEntity.notFound().build();
