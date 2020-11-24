@@ -50,7 +50,9 @@ public class PedidoVendaService {
 		return ResponseEntity.ok().build();
 	}
 	
-	
+	/*
+	 * metodos para produto - pedido
+	 * */
 	
 
 }
