@@ -1,11 +1,7 @@
 package br.com.gmissio.controleestoque.controller;
 
-import java.net.URI;
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,81 +21,49 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.gmissio.controleestoque.controller.atualizaform.AtualizarClienteForm;
 import br.com.gmissio.controleestoque.controller.dto.ClienteDto;
 import br.com.gmissio.controleestoque.form.ClienteForm;
-import br.com.gmissio.controleestoque.model.Cliente;
-import br.com.gmissio.controleestoque.repository.ClienteRepository;
-
-
+import br.com.gmissio.controleestoque.service.ClienteService;
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
 
-	@Autowired
-	private ClienteRepository clienteRepository;
+	@Autowired ClienteService service;
 	
 	@GetMapping
 	public Page<ClienteDto> lista(@RequestParam(required = false) String nome, //posteriormente filtar 
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 		
-		System.out.println(nome);
-		//para fazer com filtro de cliente
-		if (nome == null) {
-			Page<Cliente> clientes = clienteRepository.findAll(paginacao);
-			return ClienteDto.converter(clientes);
-		} else {
-			Page<Cliente> clientes = clienteRepository.findByNome(nome, paginacao);
-			return ClienteDto.converter(clientes);
-		}
+		return service.read(nome, paginacao);
+
 	}
 	
 	@Transactional
 	@PostMapping
 	public ResponseEntity<ClienteDto> cadastrar(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
-		Cliente cliente = form.converter(form);
-		clienteRepository.save(cliente);
 		
-		URI uri = uriBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
-		
-		return ResponseEntity.created(uri).body(new ClienteDto(cliente));
+		return service.create(form, uriBuilder);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ClienteDto> detalhar(@PathVariable Long id) {
-		Optional<Cliente> optional = clienteRepository.findById(id);
-		if (optional.isPresent()) {
-			return ResponseEntity.ok(new ClienteDto(optional.get()));
-		}
-		
-		return ResponseEntity.notFound().build();
+
+		return service.getById(id);
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
 	public ResponseEntity<ClienteDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizarClienteForm form){
-		Optional<Cliente> optional = clienteRepository.findById(id);
-		if(optional.isPresent()) {
-			Cliente cliente = form.atualizar(id, clienteRepository);
-			return ResponseEntity.ok(new ClienteDto(cliente));
-		}else {
-			return ResponseEntity.notFound().build();
-		}
+
+		return service.update(id, form);
 		
 	}
 	
-
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> remover(@PathVariable Long id) {
-		Optional<Cliente> optional = clienteRepository.findById(id);
-		if (optional.isPresent()) {
-			clienteRepository.deleteById(id);
-			return ResponseEntity.ok().build();
-		}
-		
-		return ResponseEntity.notFound().build();
+
+		return service.delete(id);
 	}
-	
-	
 	
 	
 }

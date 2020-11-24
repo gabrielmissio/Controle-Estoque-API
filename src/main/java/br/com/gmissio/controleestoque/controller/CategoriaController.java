@@ -28,6 +28,7 @@ import br.com.gmissio.controleestoque.controller.dto.CategoriaDto;
 import br.com.gmissio.controleestoque.form.CategoriaForm;
 import br.com.gmissio.controleestoque.model.Categoria;
 import br.com.gmissio.controleestoque.repository.CategoriaRepository;
+import br.com.gmissio.controleestoque.service.CategoriaService;
 
 @RestController
 @RequestMapping("/categorias")
@@ -35,66 +36,41 @@ public class CategoriaController {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	@Autowired
+	private CategoriaService service;
 	
 	@GetMapping
 	public Page<CategoriaDto> lista(@RequestParam(required = false) String nome, //posteriormente filtar 
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 		
-		System.out.println(nome);
-		//para fazer com filtro de cliente
-		if (nome == null) {
-			Page<Categoria> categoria = categoriaRepository.findAll(paginacao);
-			return CategoriaDto.converter(categoria);
-		} else {
-			Page<Categoria> categoria = categoriaRepository.findByNome(nome, paginacao);
-			return CategoriaDto.converter(categoria);
-		}
+		return service.read(nome, paginacao);
 	}
 	
 	@PostMapping
 	@Transactional
 	public ResponseEntity<CategoriaDto> cadastrar(@RequestBody @Valid CategoriaForm form, UriComponentsBuilder uriBuilder){
-		Categoria categoria = form.converter(form);
-		categoriaRepository.save(categoria);
 		
-		//para pegar o caminho da uri e retornar na resposta de requisição
-		URI uri = uriBuilder.path("/categorias/{id}").buildAndExpand(categoria.getId()).toUri();
-		
-		return ResponseEntity.created(uri).body(new CategoriaDto(categoria));
+		return service.create(form, uriBuilder);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<CategoriaDto> detalhar(@PathVariable Long id){
-		
-		Optional<Categoria> optional = categoriaRepository.findById(id);
-		if(optional.isPresent()) {
-			return ResponseEntity.ok(new CategoriaDto(optional.get()));
-		}
-		return ResponseEntity.notFound().build();
+
+		return service.getById(id);
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
 	public ResponseEntity<CategoriaDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaCategoriaForm form){
-		Optional<Categoria> optinal = categoriaRepository.findById(id);
-		if(optinal.isPresent()) {
-			Categoria categoria = form.atualizar(id, categoriaRepository);
-			return ResponseEntity.ok(new CategoriaDto(categoria));
-		}else {
-			return ResponseEntity.notFound().build();
-		}
+
+		return service.update(id, form);
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> remover(@PathVariable Long id){
-		Optional<Categoria> optional = categoriaRepository.findById(id);
-		if(optional.isPresent()) {
-			categoriaRepository.deleteById(id);
-			return ResponseEntity.ok().build();
-		}else {
-			return ResponseEntity.notFound().build();
-		}
+
+		return service.delete(id);
 	}
 	
 }
