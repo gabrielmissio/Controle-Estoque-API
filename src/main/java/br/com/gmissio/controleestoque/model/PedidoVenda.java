@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 public class PedidoVenda {
 	
 	 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	 
 	@ManyToOne
 	private Cliente cliente;
@@ -29,10 +29,6 @@ public class PedidoVenda {
 	public PedidoVenda() {
 		
 	}
-	
-//	public PedidoVenda() {
-//	
-//  }
 
 	public long getId() {
 		return id;
