@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 import br.com.gmissio.controleestoque.controller.dto.PedidoVendaDto;
 import br.com.gmissio.controleestoque.model.PedidoVenda;
 import br.com.gmissio.controleestoque.repository.PedidoVendaRepository;
@@ -22,6 +23,13 @@ public class PedidoVendaService {
 		return PedidoVendaDto.converter(pedidosVendas);
 	}
 	
+	public ResponseEntity<?> create(Object form, UriComponentsBuilder uriBuildes){
+		
+		//save(produto);
+		//URI uri = uriBuildes.path("produtos/{id}").buildAndExpand(produto.getId()).toUri();
+		return ResponseEntity.ok().build(); 
+	}
+	
 	public ResponseEntity<PedidoVendaDto> getById(Long id){
 		
 		Optional<PedidoVenda> optional = pedidoVendaRepository.findById(id);
@@ -31,5 +39,18 @@ public class PedidoVendaService {
 		
 		return ResponseEntity.notFound().build();
 	}
+	
+	public ResponseEntity<?> update(Long id, Object form){
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	public ResponseEntity<?> delete(Long id){
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	
+	
 
 }

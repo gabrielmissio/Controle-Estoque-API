@@ -30,7 +30,7 @@ public class VendedorController {
 	private VendedorService service;
 	
 	@GetMapping
-	public Page<VendedorDto> lista(@RequestParam (required = false) String nome,
+	public Page<VendedorDto> readVendederos(@RequestParam (required = false) String nome,
 			@PageableDefault(sort = "id", direction = org.springframework.data.domain.Sort.Direction.ASC, page = 0, size = 10 ) Pageable paginacao){
 		
 		return service.read(nome, paginacao);
@@ -38,27 +38,27 @@ public class VendedorController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<VendedorDto> cadastrar(@RequestBody @Valid VendedorForm form, UriComponentsBuilder uriBuilder){
+	public ResponseEntity<VendedorDto> createVendedor(@RequestBody @Valid VendedorForm form, UriComponentsBuilder uriBuilder){
 
 		return service.create(form, uriBuilder);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<VendedorDto> detalhar(@PathVariable Long id){
+	public ResponseEntity<VendedorDto> getVendedorById(@PathVariable Long id){
 
 		return service.getById(id);
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
-	public ResponseEntity<VendedorDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaVendedorForm form){
+	public ResponseEntity<VendedorDto> updateVendedor(@PathVariable Long id, @RequestBody @Valid AtualizaVendedorForm form){
 		
 		return service.update(id, form);
 	}
 	
 	@Transactional
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> remover(@PathVariable Long id){
+	public ResponseEntity<?> deleteVendedor(@PathVariable Long id){
 
 		return service.delete(id);
 	}

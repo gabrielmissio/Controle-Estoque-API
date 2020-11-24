@@ -30,7 +30,7 @@ public class ClienteController {
 	@Autowired ClienteService service;
 	
 	@GetMapping
-	public Page<ClienteDto> lista(@RequestParam(required = false) String nome, //posteriormente filtar 
+	public Page<ClienteDto> readClientes(@RequestParam(required = false) String nome, //posteriormente filtar 
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 		
 		return service.read(nome, paginacao);
@@ -39,20 +39,20 @@ public class ClienteController {
 	
 	@Transactional
 	@PostMapping
-	public ResponseEntity<ClienteDto> cadastrar(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
+	public ResponseEntity<ClienteDto> createCliente(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
 		
 		return service.create(form, uriBuilder);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ClienteDto> detalhar(@PathVariable Long id) {
+	public ResponseEntity<ClienteDto> getClienteById(@PathVariable Long id) {
 
 		return service.getById(id);
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
-	public ResponseEntity<ClienteDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizarClienteForm form){
+	public ResponseEntity<ClienteDto> updateCliente(@PathVariable Long id, @RequestBody @Valid AtualizarClienteForm form){
 
 		return service.update(id, form);
 		
@@ -60,7 +60,7 @@ public class ClienteController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> remover(@PathVariable Long id) {
+	public ResponseEntity<?> deleteCliente(@PathVariable Long id) {
 
 		return service.delete(id);
 	}

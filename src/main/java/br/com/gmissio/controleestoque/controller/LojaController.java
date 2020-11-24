@@ -30,7 +30,7 @@ public class LojaController {
 	@Autowired LojaService service;
 	
 	@GetMapping
-	public Page<LojaDto> lista(@RequestParam(required = false) String nome, //posteriormente filtar 
+	public Page<LojaDto> readLojas(@RequestParam(required = false) String nome, //posteriormente filtar 
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 		
 		return service.read(nome, paginacao);
@@ -38,27 +38,27 @@ public class LojaController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<LojaDto> cadastrar(@RequestBody @Valid LojaForm form, UriComponentsBuilder uriBuilder){
+	public ResponseEntity<LojaDto> createLoja(@RequestBody @Valid LojaForm form, UriComponentsBuilder uriBuilder){
 
 		return service.create(form, uriBuilder);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<LojaDto> detalhar(@PathVariable Long id){
+	public ResponseEntity<LojaDto> getLojaById(@PathVariable Long id){
 		
 		return service.getById(id);
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
-	public ResponseEntity<LojaDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaLojaForm form){
+	public ResponseEntity<LojaDto> updateLoja(@PathVariable Long id, @RequestBody @Valid AtualizaLojaForm form){
 
 		return service.update(id, form);
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> remover(@PathVariable Long id){
+	public ResponseEntity<?> deleteLoja(@PathVariable Long id){
 
 		return service.delete(id);
 	}

@@ -20,14 +20,14 @@ public class PedidoVendaController {
 	private PedidoVendaService service;
 	
 	@GetMapping
-	public Page<PedidoVendaDto> lista(
+	public Page<PedidoVendaDto> readPedidos(
 			@PageableDefault(sort = "id", direction = org.springframework.data.domain.Sort.Direction.ASC, page = 0, size = 10) Pageable paginacao){
 
 		return service.read(paginacao);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PedidoVendaDto> detalhar(@PathVariable Long id){
+	public ResponseEntity<PedidoVendaDto> getPedidoById(@PathVariable Long id){
 		
 		return service.getById(id);
 	}

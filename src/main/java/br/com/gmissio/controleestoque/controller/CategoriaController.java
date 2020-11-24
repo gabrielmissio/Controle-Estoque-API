@@ -32,7 +32,7 @@ public class CategoriaController {
 	private CategoriaService service;
 	
 	@GetMapping
-	public Page<CategoriaDto> lista(@RequestParam(required = false) String nome, //posteriormente filtar 
+	public Page<CategoriaDto> readCategorias(@RequestParam(required = false) String nome, //posteriormente filtar 
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
 		
 		return service.read(nome, paginacao);
@@ -40,27 +40,27 @@ public class CategoriaController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<CategoriaDto> cadastrar(@RequestBody @Valid CategoriaForm form, UriComponentsBuilder uriBuilder){
+	public ResponseEntity<CategoriaDto> createCategoria(@RequestBody @Valid CategoriaForm form, UriComponentsBuilder uriBuilder){
 		
 		return service.create(form, uriBuilder);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<CategoriaDto> detalhar(@PathVariable Long id){
+	public ResponseEntity<CategoriaDto> getCategoriaById(@PathVariable Long id){
 
 		return service.getById(id);
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
-	public ResponseEntity<CategoriaDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaCategoriaForm form){
+	public ResponseEntity<CategoriaDto> updateCategoria(@PathVariable Long id, @RequestBody @Valid AtualizaCategoriaForm form){
 
 		return service.update(id, form);
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> remover(@PathVariable Long id){
+	public ResponseEntity<?> deleteCategoria(@PathVariable Long id){
 
 		return service.delete(id);
 	}

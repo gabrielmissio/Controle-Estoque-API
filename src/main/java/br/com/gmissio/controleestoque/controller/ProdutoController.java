@@ -37,7 +37,7 @@ public class ProdutoController {
 	CategoriaRepository categoriaRepository;
 	
 	@GetMapping
-	public Page<ProdutoDto> lista(@PathVariable (required = false) String descricao,
+	public Page<ProdutoDto> readProdutos(@PathVariable (required = false) String descricao,
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao){
 		
 		return service.read(descricao, paginacao);
@@ -45,27 +45,27 @@ public class ProdutoController {
 	
 	@PostMapping
 	@Transactional
-	ResponseEntity<ProdutoDto> cadastrar(@RequestBody @Valid ProdutoForm form, UriComponentsBuilder uriBuildes){
+	ResponseEntity<ProdutoDto> createProduto(@RequestBody @Valid ProdutoForm form, UriComponentsBuilder uriBuildes){
 
 		return service.create(form, uriBuildes);
 	}
 	
 	@GetMapping("/{id}")
-	ResponseEntity<ProdutoDto> especificar(@PathVariable Long id){
+	ResponseEntity<ProdutoDto> getProdutoById(@PathVariable Long id){
 		
 		return service.getById(id);
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
-	public ResponseEntity<ProdutoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaProdutoForm form){
+	public ResponseEntity<ProdutoDto> updateProduto(@PathVariable Long id, @RequestBody @Valid AtualizaProdutoForm form){
 		
 		return service.update(id, form);	
 	}
 	
 	@Transactional
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ProdutoDto> remover(@PathVariable Long id){
+	public ResponseEntity<ProdutoDto> deleteProduto(@PathVariable Long id){
 		
 		return service.delete(id);	
 	}
