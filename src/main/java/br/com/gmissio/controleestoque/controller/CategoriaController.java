@@ -1,11 +1,7 @@
 package br.com.gmissio.controleestoque.controller;
 
-import java.net.URI;
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,16 +22,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.gmissio.controleestoque.controller.atualizaform.AtualizaCategoriaForm;
 import br.com.gmissio.controleestoque.controller.dto.CategoriaDto;
 import br.com.gmissio.controleestoque.form.CategoriaForm;
-import br.com.gmissio.controleestoque.model.Categoria;
-import br.com.gmissio.controleestoque.repository.CategoriaRepository;
 import br.com.gmissio.controleestoque.service.CategoriaService;
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
 
-	@Autowired
-	private CategoriaRepository categoriaRepository;
 	@Autowired
 	private CategoriaService service;
 	

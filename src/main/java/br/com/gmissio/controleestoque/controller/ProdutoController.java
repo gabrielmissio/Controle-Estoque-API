@@ -1,11 +1,7 @@
 package br.com.gmissio.controleestoque.controller;
 
-import java.net.URI;
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,18 +17,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import br.com.gmissio.controleestoque.controller.atualizaform.AtualizaProdutoForm;
 import br.com.gmissio.controleestoque.controller.dto.ProdutoDto;
 import br.com.gmissio.controleestoque.form.ProdutoForm;
-import br.com.gmissio.controleestoque.model.Produto;
 import br.com.gmissio.controleestoque.repository.CategoriaRepository;
 import br.com.gmissio.controleestoque.repository.ProdutoRepository;
+import br.com.gmissio.controleestoque.service.ProdutoService;
 
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
 
+	@Autowired
+	private ProdutoService service;
 	@Autowired
 	ProdutoRepository produtoRepository;
 	
@@ -43,64 +40,34 @@ public class ProdutoController {
 	public Page<ProdutoDto> lista(@PathVariable (required = false) String descricao,
 			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao){
 		
-		if(descricao == null) { 
-			Page<Produto> produtos = produtoRepository.findAll(paginacao);
-			return ProdutoDto.converter(produtos);
-		}else {
-			Page<Produto> produtos = produtoRepository.findByDescricao(descricao, paginacao);
-			return ProdutoDto.converter(produtos);
-		}
-		
+		return service.read(descricao, paginacao);
 	}
 	
 	@PostMapping
 	@Transactional
 	ResponseEntity<ProdutoDto> cadastrar(@RequestBody @Valid ProdutoForm form, UriComponentsBuilder uriBuildes){
-		Produto produto = form.converter(form, categoriaRepository);
-		produtoRepository.save(produto);
-		
-		URI uri = uriBuildes.path("produtos/{id}").buildAndExpand(produto.getId()).toUri();
-		
-		return ResponseEntity.created(uri).body(new ProdutoDto(produto)); 
+
+		return service.create(form, uriBuildes);
 	}
 	
 	@GetMapping("/{id}")
 	ResponseEntity<ProdutoDto> especificar(@PathVariable Long id){
 		
-		Optional<Produto> optional = produtoRepository.findById(id); 
-		if(optional.isPresent()) {
-			return ResponseEntity.ok(new ProdutoDto(optional.get()));
-		}else {
-		return ResponseEntity.notFound().build();
-		}
+		return service.getById(id);
 	}
 	
 	@Transactional
 	@PutMapping("/{id}")
 	public ResponseEntity<ProdutoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizaProdutoForm form){
 		
-		Optional<Produto> optional = produtoRepository.findById(id);
-		if(optional.isPresent()) {
-			Produto produto = form.atualizar(id, produtoRepository);
-			return ResponseEntity.ok(new ProdutoDto(produto));
-		}else {
-			return ResponseEntity.notFound().build();
-		}
-			
+		return service.update(id, form);	
 	}
 	
 	@Transactional
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ProdutoDto> remover(@PathVariable Long id){
 		
-		Optional<Produto> optional = produtoRepository.findById(id);
-		if(optional.isPresent()) {
-			produtoRepository.deleteById(id);
-			return ResponseEntity.ok().build();
-		}else {
-			return ResponseEntity.notFound().build();
-		}
-			
+		return service.delete(id);	
 	}
 	
 }
