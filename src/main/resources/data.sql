@@ -24,7 +24,7 @@ INSERT INTO PRODUTO(codigo, descricao, preco_unitario, quantidade, categoria_id)
 INSERT INTO PEDIDO_VENDA(data_pedido, valor_total, cliente_id, vendedor_id) VALUES('2020-02-02 08:10:07', '123456789', '1', '1');
 INSERT INTO PEDIDO_VENDA(data_pedido, valor_total, cliente_id, vendedor_id) VALUES('2020-10-02 08:10:07', '999', '1', '2');
 
-INSERT INTO PEDIDO_VENDA_LIST_PRODUTOS(pedido_venda_id, list_produtos_id) VALUES('1', '2');
-INSERT INTO PEDIDO_VENDA_LIST_PRODUTOS(pedido_venda_id, list_produtos_id) VALUES('1', '1');
-INSERT INTO PEDIDO_VENDA_LIST_PRODUTOS(pedido_venda_id, list_produtos_id) VALUES('1', '3');
-INSERT INTO PEDIDO_VENDA_LIST_PRODUTOS(pedido_venda_id, list_produtos_id) VALUES('2', '3');
+INSERT INTO PEDIDO_PRODUTO(pedido_id, produto_id) VALUES('1', '2');
+INSERT INTO PEDIDO_PRODUTO(pedido_id, produto_id) VALUES('1', '1');
+INSERT INTO PEDIDO_PRODUTO(pedido_id, produto_id) VALUES('1', '3');
+INSERT INTO PEDIDO_PRODUTO(pedido_id, produto_id) VALUES('2', '3');
