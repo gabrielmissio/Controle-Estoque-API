@@ -21,6 +21,10 @@ INSERT INTO PRODUTO(codigo, descricao, preco_unitario, quantidade, categoria_id)
 INSERT INTO PRODUTO(codigo, descricao, preco_unitario, quantidade, categoria_id) VALUES('codigo produto 3', 'Aveia de trigo', '8.99', '5', '2');
 
 
+INSERT INTO FORNECEDOR(endereco, nome) VALUES('Rua fn, centro, Campinas', 'Carlos Augusto');
+INSERT INTO FORNECEDOR(endereco, nome) VALUES('Rua f1, interios, Nova Rosada', 'Sergio Ramos');
+
+
 INSERT INTO PEDIDO_VENDA(data_pedido, valor_total, cliente_id, vendedor_id) VALUES('2020-02-02 08:10:07', '123456789', '1', '1');
 INSERT INTO PEDIDO_VENDA(data_pedido, valor_total, cliente_id, vendedor_id) VALUES('2020-10-02 08:10:07', '999', '1', '2');
 
