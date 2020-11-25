@@ -26,7 +26,7 @@ public class PedidoVenda {
 
 	
 	@ManyToMany
-	@JoinTable(name="pedido_produto", joinColumns = {@JoinColumn(name="pedido_id")}, inverseJoinColumns = {@JoinColumn(name="produto_id")})
+	@JoinTable(name="pedido_venda_produto", joinColumns = {@JoinColumn(name="pedido_id")}, inverseJoinColumns = {@JoinColumn(name="produto_id")})
 	private List<Produto> listProdutos;
 	private Double valorTotal;
 	private LocalDateTime dataPedido;

@@ -28,7 +28,18 @@ INSERT INTO FORNECEDOR(endereco, nome) VALUES('Rua f1, interios, Nova Rosada', '
 INSERT INTO PEDIDO_VENDA(data_pedido, valor_total, cliente_id, vendedor_id) VALUES('2020-02-02 08:10:07', '123456789', '1', '1');
 INSERT INTO PEDIDO_VENDA(data_pedido, valor_total, cliente_id, vendedor_id) VALUES('2020-10-02 08:10:07', '999', '1', '2');
 
-INSERT INTO PEDIDO_PRODUTO(pedido_id, produto_id) VALUES('1', '2');
-INSERT INTO PEDIDO_PRODUTO(pedido_id, produto_id) VALUES('1', '1');
-INSERT INTO PEDIDO_PRODUTO(pedido_id, produto_id) VALUES('1', '3');
-INSERT INTO PEDIDO_PRODUTO(pedido_id, produto_id) VALUES('2', '3');
+INSERT INTO PEDIDO_VENDA_PRODUTO(pedido_id, produto_id) VALUES('1', '2');
+INSERT INTO PEDIDO_VENDA_PRODUTO(pedido_id, produto_id) VALUES('1', '1');
+INSERT INTO PEDIDO_VENDA_PRODUTO(pedido_id, produto_id) VALUES('1', '3');
+INSERT INTO PEDIDO_VENDA_PRODUTO(pedido_id, produto_id) VALUES('2', '3');
+
+
+INSERT INTO PEDIDO_FORNECEDOR(data_pedido, valor_total, fornecedor_id, loja_id) VALUES('2020-02-02 08:10:07', '123456789', '1', '1');
+INSERT INTO PEDIDO_FORNECEDOR(data_pedido, valor_total, fornecedor_id, loja_id) VALUES('2020-10-02 08:10:07', '999', '1', '2');
+
+
+
+INSERT INTO PEDIDO_FORNECEDOR_PRODUTO(pedido_id, produto_id) VALUES('1', '2');
+INSERT INTO PEDIDO_FORNECEDOR_PRODUTO(pedido_id, produto_id) VALUES('1', '1');
+INSERT INTO PEDIDO_FORNECEDOR_PRODUTO(pedido_id, produto_id) VALUES('1', '3');
+INSERT INTO PEDIDO_FORNECEDOR_PRODUTO(pedido_id, produto_id) VALUES('2', '3');

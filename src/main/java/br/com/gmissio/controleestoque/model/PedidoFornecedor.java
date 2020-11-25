@@ -3,14 +3,28 @@ package br.com.gmissio.controleestoque.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 
-//@Entity
+
+@Entity
 public class PedidoFornecedor {
 
-//	 @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@ManyToOne
+	private Fornecedor fornecedor;
+	@ManyToOne
 	private Loja loja;
+	@ManyToMany
+	@JoinTable(name="pedido_fornecedor_produto", joinColumns = {@JoinColumn(name="pedido_id")}, inverseJoinColumns = {@JoinColumn(name="produto_id")})
 	private List<Produto> listProduto;
 	private Double valorTotal;
 	private LocalDateTime dataPedido;
@@ -18,10 +32,14 @@ public class PedidoFornecedor {
 	public PedidoFornecedor() {
 		
 	}
-
-//	public PedidoFornecedor() {
-//		
-//	}
+	
+	public Fornecedor getFornecedor() {
+		return fornecedor;
+	}
+	
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
 	
 	public long getId() {
 		return id;
